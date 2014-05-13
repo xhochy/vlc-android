@@ -91,6 +91,14 @@ $ export NO_ARMV6=1
 If you plan to use a release build, run 'compile.sh release'
 EOF
 
+# As default, we will use iconv but provide the option to disable it
+if [ "${VLC_USE_ICONV}" = 0 ]; then
+    CONTRIB_BOOTSTRAP_OPTS+=" --disable-iconv "
+    ANDROID_MKFLAGS+=" USE_ICONV=0 "
+else
+    CONTRIB_BOOTSTRAP_OPTS+=" --ensable-iconv "
+fi
+
 export TARGET_TUPLE
 export PATH_HOST
 export HAVE_ARM
@@ -233,7 +241,7 @@ cd contrib/android
     --disable-samplerate \
     --disable-faad2 \
     --disable-harfbuzz \
-    --enable-iconv
+    ${CONTRIB_BOOTSTRAP_OPTS}
 
 # TODO: mpeg2, theora
 
@@ -292,7 +300,7 @@ export ANDROID_LIBS=${PWD}/android-libs
 export VLC_BUILD_DIR=vlc/android
 
 make $CLEAN
-make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET
+make -j1 TARGET_TUPLE=$TARGET_TUPLE PLATFORM_SHORT_ARCH=$PLATFORM_SHORT_ARCH CXXSTL=$CXXSTL RELEASE=$RELEASE $TARGET ${ANDROID_MKFLAGS}
 
 # 3/ Environment script
 echo "Generating environment script."

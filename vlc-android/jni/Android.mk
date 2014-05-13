@@ -68,10 +68,15 @@ LOCAL_LDLIBS := -L$(VLC_CONTRIB)/lib \
 	-lspeex -lspeexdsp \
 	-lxml2 -lpng -lgnutls -lgcrypt -lgpg-error \
 	-lnettle -lhogweed -lgmp \
-	-lfreetype -liconv -lass -lfribidi -lopus \
+	-lfreetype -lass -lfribidi -lopus \
 	-lEGL -lGLESv2 -ljpeg \
 	-ldvdread -ldvdcss \
 	$(CPP_STATIC)
+
+USE_ICONV ?= 1
+ifeq ($(USE_ICONV),1)
+	LOCAL_LDLIBS += -liconv
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
