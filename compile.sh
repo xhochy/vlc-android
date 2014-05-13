@@ -271,7 +271,7 @@ else
     echo "Bootstraping"
     ../bootstrap
     echo "Configuring"
-    ${ANDROID_PATH}/configure.sh $OPTS
+    ${ANDROID_PATH}/configure.sh $OPTS ${VLC_CONFIGURE_OPTS}
     TARGET=
 fi
 
